@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { addWordFB } from "./redux/modules/word";
 
@@ -37,17 +38,19 @@ const AddPage = (props) => {
           <input type="text" ref={ex} />
         </InputBox>
       </InputWrap>
-      <AddButton onClick={addWordList}>추가하기</AddButton>
+      <Link to="/">
+        <AddButton onClick={addWordList}>추가하기</AddButton>
+      </Link>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
- background-color: aquamarine;
+  background-color: aquamarine;
   padding: 16px;
   width: 35vw;
   height: 100vh;
-  margin:auto;
+  margin: auto;
 `;
 const Title = styled.h1``;
 const InputWrap = styled.div``;
@@ -56,8 +59,8 @@ const InputBox = styled.div`
   width: 30rem;
   height: 5rem;
   padding: 16px;
-  margin-bottom:20px;
-  border-radius:10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
 `;
 const InputTitle = styled.h2`
   text-decoration: underline;
@@ -66,10 +69,10 @@ const InputTitle = styled.h2`
 const AddButton = styled.button`
   color: #fff;
   background-color: blue;
-  font-size:20px;
+  font-size: 20px;
   width: 32rem;
   height: 4rem;
   margin: 30px auto;
-  border-radius:10px;
+  border-radius: 10px;
 `;
 export default AddPage;

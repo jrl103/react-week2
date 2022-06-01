@@ -1,10 +1,13 @@
 // card.js
 import { db } from "../../firebase";
-import { collection, doc, getDoc, getDocs, addDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, addDoc, deleteDoc } from "firebase/firestore";
+// import { async } from "@firebase/util";
+
 
 // Action
 const LOAD = "word/LOAD";
 const CREATE = "word/CREATE";
+const DELETE = "word/DELETE"
 
 const initialState = {list : []};
 
@@ -22,6 +25,10 @@ export function createWord(word) {
   return { type: CREATE, word };
 }
 
+export function deleteWord(word_index){
+  // console.log("지울 버킷 인덱스", word_index);
+  return {type:DELETE, word_index};
+}
 
 // middlewares
 export const loadWordFB = () => {
@@ -58,6 +65,25 @@ export const addWordFB = (word) => {
   };
 };
 
+export const deleteWordFB = (word_id) => {
+  return async function (dispatch, getState) {
+    if (!word_id) {
+      window.alert("아이디가 없네요!");
+      return;
+    }
+    const docRef = doc(db, "word", word_id);
+    await deleteDoc(docRef);
+
+    const _word_list = getState().word.list;
+    const word_index = _word_list.findIndex((b) => {
+      return b.id === word_id;
+    });
+
+    dispatch(deleteWord(word_index));
+  };
+};
+
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -68,9 +94,29 @@ export default function reducer(state = initialState, action = {}) {
       // console.log("이제 값을 바꿀거야!");
       const new_word_list = [...state.list, action.word];
       return { ...state, list: new_word_list };
+      // console.log(new_word_list)
       
     }
+    // case "word/DELETE": {
+    //   console.log(state, action);
+    //   const new_bucket_list = state.list.filter((i, idx) => {
+    //     console.log(action.word_index !== idx, action.word_index);
+    //     return parseInt(action.word_index) !== idx;
+    //   });
 
+    //   // console.log(new_bucket_list);
+    //   return {list:new_bucket_list};
+    // }
+    
+       case "word/DELETE": {
+      const new_word_list = state.list.filter((l, idx) => {
+        return parseInt(action.word_index) !== idx;
+      });
+
+      return { ...state, list: new_word_list };
+   
+    }
+    
     default:
       return state;
   }
