@@ -27,15 +27,15 @@ const AddPage = (props) => {
       <InputWrap>
         <InputBox>
           <InputTitle>단어</InputTitle>
-          <input type="text" ref={word} />
+          <Input type="text" ref={word} />
         </InputBox>
         <InputBox>
           <InputTitle>설명</InputTitle>
-          <input type="text" ref={desc} />
+          <Input type="text" ref={desc} />
         </InputBox>
         <InputBox>
           <InputTitle>예시</InputTitle>
-          <input type="text" ref={ex} />
+          <Input type="text" ref={ex} />
         </InputBox>
       </InputWrap>
       <Link to="/">
@@ -53,6 +53,7 @@ const Wrap = styled.div`
   margin: auto;
 `;
 const Title = styled.h1``;
+
 const InputWrap = styled.div``;
 const InputBox = styled.div`
   background-color: #fff;
@@ -65,6 +66,10 @@ const InputBox = styled.div`
 const InputTitle = styled.h2`
   text-decoration: underline;
   font-size: 13px;
+`;
+const Input = styled.input`
+  width:25rem;
+  height:2rem;
 `;
 const AddButton = styled.button`
   color: #fff;
